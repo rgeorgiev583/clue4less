@@ -3,14 +3,14 @@
 Basically, the idea is to write something which provides a unified framework atop the networking/multiplayer subsystem for serving and playing games in a distributed (i.e. grid- or cluster-like) manner.
 
 From an architectural viewpoint, I plan to separate the plugin into clear-cut components which could theoretically function separately from one another.
-More specifically, these are the things I eventually plan (i.e. hope) to implement (of course, I am not sure whether I will manage to complete all of them):
+More specifically, these are the ones I eventually plan (i.e. hope) to implement (of course, I am not sure whether I will manage to complete all of them):
 * Low-level backend API for the actual distributed network implementation so that different distributed infrastructure providers can be used;
 * Low-level frontend API for making the various subsystems of the engine distributed;
 * High-level API for enabling of distributed functionality for the various objects and functions (or even whole games);
 * An abstraction layer atop everything which makes sure that transferring objects and performing actions across the network is network-transparent;
 * (this one will be *really* tough to do) Patches for the different subsystems so that they would work with the low-level external API.
 
-I would consider it a success to only *partially* implement any one of these.
+To be honest, I would consider it a success to only *partially* implement any one of these.
 
 ## Low-level backend API
 It is designed so that it could use external libraries for the whole implementation (or UE-specific ones or ones actually used in UE).
@@ -39,14 +39,15 @@ It will work with configuration files on each node (i.e. peer) which will specif
 
 There would be also some traits for the different aspects of nodes:
 
+* NodeStorage: defines the different levels of persistence.
 * NodeRole: descriptions of conditional replication rules which explain when exactly an object of a certain type should be replicated on the current node.  There will be filters for objects of certain types: how much of them are allowed to be stored, also the complexity and generationality of the objects, etc.;
-* NodeAuthority: the authority of the node.
+* NodeAuthority: the authority of the node: what is it allowed to modify, etc; will map to UE authority.
 
 ## High-level API
 
 This will be used by the people who create modules and plugins.  It will mainly extend various classes and also *hwavily* use reflection.
 
-* It will include wrappers for the different objects which could be generated using reflection.  These wrappers would add some logic which enables the object to be distributed: for example, a measure of the complexity of the object (time and space), generationality of the object (how many instances of it are expected to be created during the duration of the game), quantifiers for how frequently the object is accessed from certain other objects;
+* It will include wrappers for the different objects which could be generated using reflection.  These wrappers would add some logic which enables the object to be distributed: for example, a measure of the complexity of the object (time and space), generationality of the object (how many instances of it are expected to be created during the duration of the game), quantifiers for how frequently the object is accessed from certain other objects, persistence of the object (how long it would be kept in the different levels of memory), etc;
 * Task:  has some priority and computational load defined;
 * Different types of tasks which could be mapped to different behaviours in UE;
 
