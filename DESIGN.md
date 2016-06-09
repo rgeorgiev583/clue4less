@@ -33,20 +33,20 @@ The main elements of the API:
 
 ## Low-level frontend API
 
-It will work with configuration files on each node (i.e. peer) which will specify the capabilities of the node:
+It will work with configuration files on each node (i.e. peer) which will specify the capabilities of the node and be instance-specific:
 * which subsystem(s) will the node be responsible for;
 * the computational abilities of the node (which are to be obtained from hardware benchmarks, for which a tool could also  ):  they would be expressed in the terms of approximate maximum numbers of objects of certain complexities which could be created from the different classes.
 
-There would be also some classes like:
+There would be also some traits for the different usages of nodes:
 
-* NodeRole: descriptions of conditional replication rules which explain when exactly an object of a certain type should be replicated on the current node.  There will be filters for objects of certain types: how much of them are allowed to be stored, also the complexity of generationality of the objects, etc.;
+* NodeRole: descriptions of conditional replication rules which explain when exactly an object of a certain type should be replicated on the current node.  There will be filters for objects of certain types: how much of them are allowed to be stored, also the complexity and generationality of the objects, etc.;
 * NodeAuthority: the authority of the node.
 
 ## High-level API
 
 This will be used by the people who create modules and plugins.  It will mainly extend various classes and also *hwavily* use reflection.
 
-* It will include wrappers for the different objects which could be generated using reflection.  These wrappers would add some logic which enables the object to be distributed: for example, a measure of the complexity of the object (time and space), generationality of the object (how many instances of it are expected to be created during the duration of the game),
+* It will include wrappers for the different objects which could be generated using reflection.  These wrappers would add some logic which enables the object to be distributed: for example, a measure of the complexity of the object (time and space), generationality of the object (how many instances of it are expected to be created during the duration of the game), quantifiers for how frequently the object is accessed from certain other objects;
 * Task:  has some priority and computational load defined;
 * Different types of tasks which could be mapped to different behaviours in UE;
 
