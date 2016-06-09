@@ -17,24 +17,30 @@ It is designed so that it could use external libraries for the whole implementat
 The main elements of the API:
 * StreamTransport (the default implementation would probably the [internal low-level TCP socket API in Unreal](https://wiki.unrealengine.com/TCP_Socket_Listener,_Receive_Binary_Data_From_an_IP/Port_Into_UE4,_%28Full_Code_Sample%29)):  could theoretically use any stream-oriented protocol, not only TCP;
 * DatagramTransport (the default implementation would probably the [internal low-level UDP socket API in Unreal](https://wiki.unrealengine.com/UDP_Socket_Sender_Receiver_From_One_UE4_Instance_To_Another)):  could theoretically use any datagram-oriented protocol, not only UDP;
-* ChannelConnection (implementation of a message-oriented protocol)
-* Auth (authentication protocol between nodes)
-* DistributedHash (for various things)
+* ChannelConnection (implementation of a message-oriented protocol);
+* Auth (authentication protocol between nodes);
+* DistributedHash (for various things);
+* Replicator (would take care of replications of objects.  Makes sense because it would mainly handle batch replications);
+* ObjectPool (would probably be a wrapper over the DistributedHash for accessing objects located in various nodes);
 * Node:  abstract representation of a node in the distributed system;
 * Grid:  abstract representation of the whole distributed network, including all dependencies between the various nodes;
 * TreeGrid:  a rooted hierarchical grid;
 * RingGrid:  a grid which has all nodes with equal priority;
 * CompositeGrid:  A grid which is composed of grids of different types;
 * RootNode:  the node with the highest priority;
-* Node:  a node with custom-defined priority.
+* Node:  a node with custom-defined priority;
+* ... and other kinds of nodes.
 
 ## Low-level frontend API
 
 It will work with configuration files on each node (i.e. peer) which will specify the capabilities of the node:
 * which subsystem(s) will the node be responsible for;
 * the computational abilities of the node (which are to be obtained from hardware benchmarks, for which a tool could also  ):  they would be expressed in the terms of approximate maximum numbers of objects of certain complexities which could be created from the different classes.
-* descriptions of conditional replication rules which explain when exactly an object of a certain type should be replicated on the current node.  There will be filters for objects of certain types: how much of them are allowed to be stored, etc.;
-* the authority of the node.
+
+There would be also some classes like:
+
+* NodeRole: descriptions of conditional replication rules which explain when exactly an object of a certain type should be replicated on the current node.  There will be filters for objects of certain types: how much of them are allowed to be stored, also the complexity of generationality of the objects, etc.;
+* NodeAuthority: the authority of the node.
 
 ## High-level API
 
@@ -48,3 +54,5 @@ This will be used by the people who create modules and plugins.  It will mainly 
 
 This will actually include (sort of) an implementation of P2P networking, and is not required for the other components to work.
 It will actually provide a really high-level interface to the game developer that hides from him the various network-related tasks such as caring about replication (and actually the whole networking subsystem).
+
+Actually it would include wrappers for the classes in UE which have network-dependent behaviour which makes them work network-transparently.
