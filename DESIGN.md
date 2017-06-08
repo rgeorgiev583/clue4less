@@ -3,12 +3,10 @@
 Basically, the idea is to write something which provides a unified framework atop the networking/multiplayer subsystem for serving and playing games in a distributed (i.e. grid- or cluster-like) manner.
 
 From an architectural viewpoint, I plan to separate the plugin into clear-cut components which could theoretically function separately from one another.
-More specifically, these are the ones I eventually plan (i.e. hope) to implement (of course, I am not sure whether I will manage to complete all of them):
+More specifically, these are the ones I eventually plan to implement (it is not guaranteed that I will manage to complete all of them):
 * Low-level backend API for the actual distributed network implementation so that different distributed infrastructure providers can be used;
-* Low-level frontend API for making the various subsystems of the engine distributed;
-* High-level API for enabling of distributed functionality for the various objects and functions (or even whole games);
-* An abstraction layer atop everything which makes sure that transferring objects and performing actions across the network is network-transparent;
-* (this one will be *really* tough to do) Patches for the different subsystems so that they would work with the low-level external API.
+* Low-level frontend API for making the various subsystems of the engine distributed (this would mean patching the different subsystems);
+* High-level API for enabling of distributed functionality for the various objects and functions (or even whole games).  This layer would be positioned atop everything and will make sure that transferring objects and performing actions across the network is network-transparent.
 
 To be honest, I would consider it a success to only *partially* implement any one of these.
 
