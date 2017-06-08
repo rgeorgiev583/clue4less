@@ -43,8 +43,7 @@ It will consist of configuration files on each node (i.e. peer) which will speci
 
 ## High-level API
 
-This will be used by the people who create modules and plugins.  It will mainly extend various classes and also *heavily* use reflection.
-
+This will be used by the people who create modules and plugins.  It will mainly extend various classes and also *heavily* use reflection:
 * It will include wrappers for the different kinds of objects (which could be generated using reflection).  These wrappers would add some logic which enables the object to be distributed: for example, a measure of the complexity of the object (time and space), generationality of the object (how many instances of it are expected to be created during the duration of the game), quantifiers for how frequently the object is accessed from certain other objects, lifetime of the object (how long it would be kept in memory), peristentce of the object (whether it will survive across different instances of the game), etc;
 ** Task:  has some priority and computational load defined; different types of tasks would be mapped to different behaviours in UI.
 
